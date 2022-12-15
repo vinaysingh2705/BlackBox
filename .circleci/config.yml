@@ -33,7 +33,7 @@ jobs:
   test_run:
 
     docker:
-      - image: circleci/python:3.10-node-browsers-legacy
+      - image: circleci/python:3.10.9
     
 
     steps:
