@@ -17,8 +17,14 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-      
-      - update
+  
+  get_branch:
+
+    docker:
+      - image: cimg/base:stable
+    
+    steps:
+      - checkout
       - run:
           name: "print branch"
           command: "echo <<pipeline.git.branch>>"
@@ -30,3 +36,4 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
+      - get_branch
