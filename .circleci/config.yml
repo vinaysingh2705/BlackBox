@@ -27,9 +27,8 @@ jobs:
       - run:
           name: "print branch"
           command: "echo <<pipeline.git.branch>>"
- 
-  test_run:
 
+  test_migrate_db:
     docker:
       - image: cimg/python:3.10.9
 
@@ -48,16 +47,28 @@ jobs:
           command: |
             . venv/bin/activate
             python manage.py migrate
+
+
+  test_cases_run:
+
+    docker:
+      - image: cimg/python:3.10.9
+
+    steps:
+      - checkout
+      - run:
+          name: Installing dependencies
+          command: |
+            python3 --version
+            python3.10 -m venv venv
+            . venv/bin/activate
+            pip3 install -r requirements.txt
+
       - run:
           name: Running tests
           command: |
             . venv/bin/activate
             python manage.py test
-      - run:
-          name: Make directory
-          command: mkdir test-results
-      - store_test_results:
-          path: test-results
 
 
 
@@ -68,4 +79,5 @@ workflows:
     jobs:
       - say-hello
       - get_branch
-      - test_run
+      - test_migrate_db
+      - test_cases_run
