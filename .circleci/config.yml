@@ -33,7 +33,7 @@ jobs:
   test_run:
 
     docker:
-      - image: cimg/base:stable
+      - image: circleci/python:3.10-node-browsers-legacy
     
 
     steps:
