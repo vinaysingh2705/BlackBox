@@ -37,7 +37,9 @@ jobs:
     
 
     steps:
-      - checkout 
+      - store_test_results:
+        path: test-results   
+
       - run:
           name: Installing dependencies
           command: |
@@ -57,8 +59,7 @@ jobs:
             . venv/bin/activate
             python manage.py test
 
-      - store_test_results:
-        path: test-results
+
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
