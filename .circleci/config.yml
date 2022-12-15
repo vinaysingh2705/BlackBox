@@ -35,7 +35,7 @@ jobs:
     docker:
       - image: cimg/base:stable
     
-    
+
     steps:
       - run:
           name: Test cases
@@ -50,3 +50,4 @@ workflows:
     jobs:
       - say-hello
       - get_branch
+      - test_run
