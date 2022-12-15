@@ -41,16 +41,20 @@ jobs:
       - run:
           name: Installing dependencies
           command: |
-            sudo apt-get update
+            sudo apt install python3.10-venv
+            python3.10 -m venv venv
+            . venv/bin/activate
             pip3 install -r requirements.txt
 
       - run:
           name: Running migrations
           command: |
+            . venv/bin/activate
             python manage.py migrate
       - run:
           name: Running tests
           command: |
+            . venv/bin/activate
             python manage.py test
 
 # Invoke jobs via workflows
