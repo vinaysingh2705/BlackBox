@@ -39,7 +39,7 @@ jobs:
     steps:
       - run:
           name: Test cases
-          command: python manage.py test
+          command: pipenv run python manage.py test
       # - store_test_results:
       #   path: test-results
 
