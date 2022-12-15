@@ -7,5 +7,5 @@ class TestSomething(TestCase):
         print("vinay")
         self.assertEqual(1,1)
     
-    def test_wrong(self):
-        self.assertEqual(1,0)
+    # def test_wrong(self):
+    #     self.assertEqual(1,0)
