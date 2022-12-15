@@ -17,6 +17,9 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+      
+      - update
+      - run:
           name: "print branch"
           command: "echo <<pipeline.git.branch>>"
 
