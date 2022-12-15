@@ -53,7 +53,10 @@ jobs:
           command: |
             . venv/bin/activate
             python manage.py test
-
+            mkdir test-results
+      
+      - store_test_results:
+          path: test-results
 
 
 
