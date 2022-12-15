@@ -37,9 +37,7 @@ jobs:
     
 
     steps:
-      - store_test_results:
-        path: test-results   
-
+      - checkout:
       - run:
           name: Installing dependencies
           command: |
