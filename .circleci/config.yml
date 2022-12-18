@@ -29,6 +29,7 @@ jobs:
           command: "echo <<pipeline.git.branch>>"
 
   test_migrate_db:
+    working_directory: ~/backend/
     docker:
       - image: cimg/python:3.10.9
 
