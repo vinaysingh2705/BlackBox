@@ -35,18 +35,19 @@ jobs:
     steps:
       - checkout
       - run:
-          path: ~/backend
           name: Installing dependencies
           command: |
             python3 --version
             python3.10 -m venv venv
             . venv/bin/activate
+            cd backend/
             pip3 install -r requirements.txt
 
       - run:
           name: Running migrations
           command: |
             . venv/bin/activate
+            cd backend/
             python manage.py migrate
 
 
@@ -54,21 +55,21 @@ jobs:
 
     docker:
       - image: cimg/python:3.10.9
-    working_directory: ~/backend
     steps:
       - checkout
       - run:
           name: Installing dependencies
           command: |
-            python3 --version
             python3.10 -m venv venv
             . venv/bin/activate
+            cd backend/
             pip3 install -r requirements.txt
 
       - run:
           name: Running tests
           command: |
             . venv/bin/activate
+            cd backend/
             python manage.py test
 
 
