@@ -29,13 +29,13 @@ jobs:
           command: "echo <<pipeline.git.branch>>"
 
   test_migrate_db:
-    working_directory: ~/backend/
     docker:
       - image: cimg/python:3.10.9
 
     steps:
       - checkout
       - run:
+          path: ~/backend
           name: Installing dependencies
           command: |
             python3 --version
