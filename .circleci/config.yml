@@ -54,7 +54,7 @@ jobs:
 
     docker:
       - image: cimg/python:3.10.9
-
+    working_directory: ~/backend
     steps:
       - checkout
       - run:
