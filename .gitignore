@@ -1,0 +1,3 @@
+backend/BlackBox/.env
+backend/BlackBox/__pycache__
+backend/BlackBox/settings/__pycache__
