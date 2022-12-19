@@ -61,6 +61,11 @@ jobs:
             . venv/bin/activate
             cd backend/
             python manage.py test
+      - slack/notify:
+          event: fail
+          channel: $SLACK_CHANNEL
+          template: basic_fail1
+
   slack_notification:
     docker:
       - image: cimg/base:stable
@@ -84,6 +89,6 @@ workflows:
     jobs:
       - say-hello
       - get_branch
-      - test_cases_run
-      - slack_notification:
+      - test_cases_run:
           context: slack-secrets
+
