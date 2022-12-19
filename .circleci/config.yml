@@ -33,10 +33,6 @@ jobs:
   test_cases_run:
     docker:
       - image: cimg/python:3.10.9
-      - image: cimg/postgres:14.1
-        environment:
-          POSTGRES_USER: vinay
-          POSTGRES_DB: blackbox
     steps:
       - checkout
       - run:
@@ -66,22 +62,6 @@ jobs:
           channel: $SLACK_CHANNEL
           template: basic_fail1
 
-  slack_notification:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - slack/notify:
-          event: fail
-          branch_pattern: master
-          channel: $SLACK_CHANNEL
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          branch_pattern: master
-          channel: $SLACK_CHANNEL
-          template: success_tagged_deploy_1
-
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -91,4 +71,3 @@ workflows:
       - get_branch
       - test_cases_run:
           context: slack-secrets
-
