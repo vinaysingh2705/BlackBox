@@ -85,4 +85,5 @@ workflows:
       - say-hello
       - get_branch
       - test_cases_run
-      - slack_notification
+      - slack_notification:
+          context: slack-secrets
