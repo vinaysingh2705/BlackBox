@@ -57,6 +57,8 @@ jobs:
             . venv/bin/activate
             cd backend/
             python manage.py test
+      - store_test_results:
+          path: test-results
       - slack/notify:
           event: fail
           channel: $SLACK_CHANNEL
