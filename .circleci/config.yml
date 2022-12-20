@@ -32,7 +32,6 @@ jobs:
             git subtree split --prefix backend main
             git subtree split --prefix backend <<pipeline.git.branch>>
 
-
   test_cases_run:
     docker:
       - image: cimg/python:3.10.9
@@ -71,9 +70,16 @@ jobs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   experimenting_with_things:
+    parameters:
+      initial:
+        type: string
+        command: git subtree split --prefix backend main
+      final:
+        type: string
+        command: git subtree split --prefix backend <<pipeline.git.branch>>
     when:
       not:
-        equal: [git subtree split --prefix backend main, git subtree split --prefix backend <<pipeline.git.branch>>]
+        equal: [<<paramters.initial>>, <<parameters.final>>]
     jobs:
       - say-hello
   then_do_this:
