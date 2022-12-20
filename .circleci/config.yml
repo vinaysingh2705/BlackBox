@@ -17,7 +17,7 @@ jobs:
       - checkout:
           when:
             condition:
-              equal: [git subtree split --prefix=backend main,git subtree split --prefix=backend <<pipeline.git.branch>>]
+              not_equal: [git subtree split --prefix=backend main,git subtree split --prefix=backend <<pipeline.git.branch>>]
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
