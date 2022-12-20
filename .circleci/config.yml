@@ -73,7 +73,9 @@ jobs:
 workflows:
   experimenting_with_things:
     when:
-        not_equal: [git subtree split --prefix backend main, git subtree split --prefix backend <<pipeline.git.branch>>]
+      condition:
+        not: 
+          - equal: [git subtree split --prefix backend main, git subtree split --prefix backend <<pipeline.git.branch>>]
     jobs:
       - say-hello
   then_do_this:
