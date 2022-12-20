@@ -32,8 +32,8 @@ jobs:
       - run:
           name: "print branch"
           command: | 
-            git subtree split --prefix=backend main
-            git subtree split --prefix=backend <<pipeline.git.branch>>
+            git subtree split --prefix backend main
+            git subtree split --prefix backend <<pipeline.git.branch>>
 
 
 
