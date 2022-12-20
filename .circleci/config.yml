@@ -73,8 +73,8 @@ workflows:
   experimenting_with_things:
     when:
       condition:
-        not:
           equal: [1,0]
+
     jobs:
       - say-hello
   then_do_this:
