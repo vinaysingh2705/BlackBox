@@ -33,7 +33,6 @@ jobs:
             git subtree split --prefix backend <<pipeline.git.branch>>
 
 
-
   test_cases_run:
     docker:
       - image: cimg/python:3.10.9
@@ -76,6 +75,7 @@ workflows:
       condition:
         not: 
           - equal: [git subtree split --prefix backend main, git subtree split --prefix backend <<pipeline.git.branch>>]
+      type: approval
     jobs:
       - say-hello
   then_do_this:
