@@ -9,16 +9,14 @@ jobs:
   testing:
     docker:
       - image: cimg/base:stable
-    environment:
-      initial: 
-        command: git split subtree --prefix backend <<pipeline.git.branch>>
     steps:
-      # - checkout
-      # - run:
-      #     command: |
-      #       intial = git split subtree --prefix backend <<pipeline.git.branch>>
+      - checkout
       - run:
-          command: "echo $initial"
+          command: |
+            echo 'export INITIAL= git split subtree --prefix backend main' >> "$BASH_ENV"
+            source "$BASH_ENV"
+      - run:
+          command: "echo $INITIAL"
       # - run: <<parameters.initial>>
 
   say-hello:
