@@ -75,7 +75,7 @@ workflows:
   experimenting_with_things:
     jobs:
       - path-filtering/filter:
-          name: check-updated-files
+          name: check-updated-file
           mapping: clazar/backend/.* say-hello true
           base-revision: <<pipeline.git.branch>>
           # config-path: .circleci/config.yml
