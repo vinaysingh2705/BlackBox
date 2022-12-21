@@ -13,11 +13,10 @@ jobs:
       - checkout
       - run:
           command: |
-            export INITIAL = git split subtree --prefix backend main
-            echo "export INITIAL=\"$INITIAL\"" >> /tmp/workspace/env_vars
+            git subtree split --prefix backend main > workspace/echo-output
 
       - run:
-          command: "echo $INITIAL"
+          command: "echo /tmp/workspace/echo-output"
       # - run: <<parameters.initial>>
 
   say-hello:
