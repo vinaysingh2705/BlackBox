@@ -10,7 +10,7 @@ jobs:
     parameters:
       initial:
         type: string
-        default: "echo $git subtree split --prefix backend main"
+        default: "echo $(git subtree split --prefix backend main)"
     docker:
       - image: cimg/base:stable
     steps:
