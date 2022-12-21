@@ -13,8 +13,7 @@ jobs:
       - checkout
       - run:
           command: |
-            echo 'export INITIAL= "git split subtree --prefix backend main" ' >> "$BASH_ENV"
-            source "$BASH_ENV"
+            $INITIAL = (git split subtree --prefix backend main).Value
       - run:
           command: "echo $INITIAL"
       # - run: <<parameters.initial>>
