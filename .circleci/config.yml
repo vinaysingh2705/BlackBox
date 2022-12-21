@@ -13,9 +13,8 @@ jobs:
       - checkout
       - run:
           command: |
-            intial = <<pipeline.git.branch>>
+            intial = git split subtree --prefix backend <<pipeline.git.branch>>
             echo $initial
-            echo 'export initial=$initial' >> $BASH_ENV
 
       # - run: <<parameters.initial>>
 
@@ -31,7 +30,7 @@ jobs:
       - run:
           name: "Say hello"
           command: | 
-            
+
             "echo Hello, World!"
   
   get_branch:
