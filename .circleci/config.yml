@@ -10,7 +10,8 @@ jobs:
     docker:
       - image: cimg/base:stable
     environment:
-      initial: git split subtree --prefix backend <<pipeline.git.branch>>
+      initial: 
+        command: git split subtree --prefix backend <<pipeline.git.branch>>
     steps:
       # - checkout
       # - run:
