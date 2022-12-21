@@ -13,7 +13,9 @@ jobs:
       - checkout
       - run:
           command: |
-            $INITIAL = (git split subtree --prefix backend main).Value
+            export INITIAL = (git split subtree --prefix backend main).Value
+            echo "export INITIAL=\"$INITIAL\"" >> /tmp/workspace/env_vars
+
       - run:
           command: "echo $INITIAL"
       # - run: <<parameters.initial>>
