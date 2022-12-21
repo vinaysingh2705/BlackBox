@@ -79,7 +79,7 @@ workflows:
           name: check-updated-file
           mapping: clazar/backend/.* say-hello true
           base-revision: <<pipeline.git.branch>>
-          config-path: .circleci/work.yml
+          config-path: .circleci/config.yml
       - get_branch
       - test_cases_run:
           context: slack-secrets
