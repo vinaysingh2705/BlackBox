@@ -14,8 +14,8 @@ jobs:
       - run:
           command: |
             intial = git split subtree --prefix backend <<pipeline.git.branch>>
-            echo $initial
-
+      - run:
+          command: "echo $initial"
       # - run: <<parameters.initial>>
 
   say-hello:
