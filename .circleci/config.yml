@@ -71,6 +71,11 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
+  then_do_this:
+    jobs:
+      - get_branch
+      - test_cases_run:
+          context: slack-secrets
   experimenting_with_things:
     jobs:
       - path-filtering/filter:
@@ -78,9 +83,4 @@ workflows:
           mapping: clazar/backend/.* say-hello true
           base-revision: <<pipeline.git.branch>>
           config-path: .circleci/config.yml
-  #  then_do_this:
-  #   jobs:
-  #     - get_branch
-  #     - test_cases_run:
-  #         context: slack-secrets
 
