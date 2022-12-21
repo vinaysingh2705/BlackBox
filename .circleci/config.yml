@@ -81,8 +81,8 @@ workflows:
           base-revision: <<pipeline.git.branch>>
           config-path: .circleci/config.yml
 
-  # then_do_this:
-  #   jobs:
-  #     - get_branch
-  #     - test_cases_run:
-  #         context: slack-secrets
+  then_do_this:
+    jobs:
+      - get_branch
+      - test_cases_run:
+          context: slack-secrets
