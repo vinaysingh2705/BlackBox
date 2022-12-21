@@ -75,12 +75,9 @@ workflows:
     jobs:
       - path-filtering/filter:
           name: check-updated-files
-          mapping: clazar/backend/ true
+          mapping: clazar/backend/.* say-hello true
           base-revision: <<pipeline.git.branch>>
           config-path: .circleci/config.yml
-      - say-hello: 
-          requires: 
-            - check-updated-files
   #  then_do_this:
   #   jobs:
   #     - get_branch
