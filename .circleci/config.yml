@@ -14,6 +14,12 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
 
+      - run:
+          name: "branch status"
+          command: |
+            git subtree split --prefix backend main
+            git subtree split --prefix backend <<pipeline.git.branch>>
+
   # get_branch:
 
   #   docker:
