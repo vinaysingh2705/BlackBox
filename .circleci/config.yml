@@ -22,23 +22,18 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Setup custom environment variables"
-          command: echo 'export MY_ENV_VAR=$(git subtree split --prefix backend main)' >> "$BASH_ENV"
+          name: "Setup custom master sha environment variables"
+          command: echo 'export INITIAL_SHA=$(git subtree split --prefix backend main)' >> "$BASH_ENV"
       - run:
-          name: "my custom environment variable"
-          command: echo ${MY_ENV_VAR}
+          name: "setup new branch sha environment variables"
+          command: echo 'export FINAL_SHA=$(git subtree split --prefix backend <<pipeline.git.branch>>' >> "$BASH_ENV"
       - run:
-          name: "hope"
-          command: "echo $CIRCLE_SHA1"
+          name: "my custom Initial sha environment variable"
+          command: echo ${INITIAL_SHA}
       - run:
-          name: "PR Username"
-          command: echo ${CIRCLE_PR_USERNAME}
-      - run:
-          name: "CIRCLE_USERNAME"
-          command: echo ${CIRCLE_USERNAME}
-      - run:
-          name: "CIRCLE_WORKING_DIRECTORY"
-          command: "echo $CIRCLE_WORKING_DIRECTORY"
+          name: "my custom final sha environment variable"
+          command: echo ${FINAL_SHA}
+
 
   test_cases_run:
     docker:
