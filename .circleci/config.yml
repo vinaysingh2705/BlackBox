@@ -35,7 +35,7 @@ jobs:
           command: echo ${FINAL_SHA}
       - when:
           condition:
-            equal: [1,1]
+            equal: [$INITIAL_SHA, $FINAL_SHA]
           steps:
             - run:
                 name: "lets it's working or not"
