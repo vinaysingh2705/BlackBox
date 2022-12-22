@@ -21,9 +21,7 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-      - run:
-          name: "test"
-          command: "echo <<pipeline.parameters.mapping>>"
+
   get_branch:
 
     docker:
@@ -32,10 +30,21 @@ jobs:
     steps:
       - checkout
       - run:
+          name: prepare-files-folders
+          command: |
+            ./scripts/prepare-files-folders.sh
+      - run:
           name: "print branch"
           command: | 
-            git subtree split --prefix backend main
-            git subtree split --prefix backend <<pipeline.git.branch>>
+            declare -n INITIAL=git subtree split --prefix backend main
+            export INITIAL_SHA=${INITIAL}
+            declare -n FINAL=git subtree split --prefix backend <<pipeline.git.branch>>
+            export FINAL_SHA=${FINAL}
+            ./scripts/prepare-backend.sh
+      
+      - run:
+          name: "hope"
+          command: "echo ${INITIAL_SHA}"
 
   test_cases_run:
     docker:
@@ -75,12 +84,15 @@ jobs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   experimenting_with_things:
+    when:
+      not:
+        equal: [git subtree split --prefix backend main, git subtree split --prefix backend <<pipeline.git.branch>>]
     jobs:
-      - path-filtering/filter:
-          name: check-updated-file
-          mapping: clazar/backend/.* condition_set true
-          base-revision: <<pipeline.git.branch>>
-          config-path: .circleci/config.yml
+      # - path-filtering/filter:
+      #     name: check-updated-file
+      #     mapping: clazar/backend/.* condition_set true
+      #     base-revision: <<pipeline.git.branch>>
+      #     config-path: .circleci/config.yml
       - get_branch
       - say-hello
       - test_cases_run:
