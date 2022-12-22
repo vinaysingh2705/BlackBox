@@ -29,17 +29,17 @@ jobs:
     
     steps:
       - checkout
-      - run:
-          name: "print branch"
-          command: | 
-            declare -n MAIN_BRANCH=$(git subtree split --prefix backend main)
-            export INITIAL_SHA=${INITIAL}
-            declare -n FINAL=$(git subtree split --prefix backend <<pipeline.git.branch>>)
-            export FINAL_SHA=${FINAL}
+      # - run:
+      #     name: "print branch"
+      #     command: | 
+      #       declare -n MAIN_BRANCH=$(git subtree split --prefix backend main)
+      #       export INITIAL_SHA=${INITIAL}
+      #       declare -n FINAL=$(git subtree split --prefix backend <<pipeline.git.branch>>)
+      #       export FINAL_SHA=${FINAL}
       
-      - run:
-          name: "hope"
-          command: "echo ${INITIAL_SHA}"
+      # - run:
+      #     name: "hope"
+      #     command: "echo ${INITIAL_SHA}"
 
   test_cases_run:
     docker:
