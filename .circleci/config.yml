@@ -23,7 +23,7 @@ jobs:
       - checkout
       - run:
           name: "Setup custom environment variables"
-          command: echo 'export MY_ENV_VAR="FOO"' >> "$BASH_ENV"
+          command: echo 'export MY_ENV_VAR=$(git subtree split --prefix backend main)' >> "$BASH_ENV"
       - run:
           name: "my custom environment variable"
           command: echo ${MY_ENV_VAR}
