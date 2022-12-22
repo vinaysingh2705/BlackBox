@@ -30,23 +30,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: prepare-files-folders
-          command: |
-            mkdir ./scripts/prepare-files-folders.sh
-      - run:
           name: "print branch"
           command: | 
             declare -n INITIAL=git subtree split --prefix backend main
             export INITIAL_SHA=${INITIAL}
             declare -n FINAL=git subtree split --prefix backend <<pipeline.git.branch>>
             export FINAL_SHA=${FINAL}
-            ./scripts/prepare-backend.sh
       
       - run:
           name: "hope"
-          command: |
-            cd ./scripts/prepare-files-folders.sh
-            "echo ${INITIAL_SHA}"
+          command: "echo ${INITIAL_SHA}"
 
   test_cases_run:
     docker:
