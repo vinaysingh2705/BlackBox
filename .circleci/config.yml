@@ -31,7 +31,7 @@ jobs:
       
       - run:
           name: "hope"
-          command: "echo $MAIN_BRANCH_SHA"
+          command: "echo $CIRCLE_SHA1"
 
   test_cases_run:
     docker:
