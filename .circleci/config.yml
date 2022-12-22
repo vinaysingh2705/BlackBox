@@ -14,24 +14,26 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
 
-  # get_branch:
+  get_branch:
 
-  #   docker:
-  #     - image: cimg/base:stable
+    docker:
+      - image: cimg/base:stable
     
-  #   steps:
-  #     - checkout
-      # - run:
-      #     name: "print branch"
-      #     command: | 
-      #       declare -n MAIN_BRANCH=$(git subtree split --prefix backend main)
-      #       export INITIAL_SHA=${INITIAL}
-      #       declare -n FINAL=$(git subtree split --prefix backend <<pipeline.git.branch>>)
-      #       export FINAL_SHA=${FINAL}
+    steps:
+      - checkout
+      - run:
+          name: "print branch"
+          command: | 
+            declare -n MAIN_BRANCH=$(git subtree split --prefix backend main)
+            export MAIN_BRANCH_SHA=${MAIN_BRANCH}
+            declare -n DIFF_BRANCH=$(git subtree split --prefix backend <<pipeline.git.branch>>)
+            export DIFF_BRANCH_SHA=${DIFF_BRANCH}
       
-      # - run:
-      #     name: "hope"
-      #     command: "echo ${INITIAL_SHA}"
+      - run:
+          name: "hope"
+          command: |
+            "echo ${MAIN_BRANCH_SHA}"
+            "echo ${DIFF_BRANCH_SHA}"
 
   test_cases_run:
     docker:
@@ -76,9 +78,9 @@ jobs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   experimenting_with_things:
-    when:
-      not:
-        equal: ['${git subtree split --prefix backend main}', '${git subtree split --prefix backend <<pipeline.git.branch>>}']
+    # when:
+    #   not:
+    #     equal: ['${git subtree split --prefix backend main}', '${git subtree split --prefix backend <<pipeline.git.branch>>}']
     jobs:
       # - path-filtering/filter:
       #     name: check-updated-file
