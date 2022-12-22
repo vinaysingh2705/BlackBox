@@ -96,7 +96,7 @@ workflows:
       - get_branch
   testing_workflow:
     when:
-      equal: [echo $(INITIAL_SHA), echo $(FINAL_SHA)]
+      equal: [run: echo $(INITIAL_SHA), run: echo $(FINAL_SHA)]
     jobs:
       - test_cases_run
 
