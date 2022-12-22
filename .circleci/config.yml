@@ -32,6 +32,13 @@ jobs:
       - run:
           name: "hope"
           command: "echo $CIRCLE_SHA1"
+      - run:
+          name: "PR Username"
+          command: "echo $CIRCLE_PR_USERNAME"
+      
+      - run:
+          name: "CIRCLE_WORKING_DIRECTORY"
+          command: "echo $CIRCLE_WORKING_DIRECTORY"
 
   test_cases_run:
     docker:
