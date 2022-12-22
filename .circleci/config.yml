@@ -32,7 +32,7 @@ jobs:
       - run:
           name: prepare-files-folders
           command: |
-            ./scripts/prepare-files-folders.sh
+            mkdir ./scripts/prepare-files-folders.sh
       - run:
           name: "print branch"
           command: | 
@@ -44,7 +44,9 @@ jobs:
       
       - run:
           name: "hope"
-          command: "echo ${INITIAL_SHA}"
+          command: |
+            cd ./scripts/prepare-files-folders.sh
+            "echo ${INITIAL_SHA}"
 
   test_cases_run:
     docker:
