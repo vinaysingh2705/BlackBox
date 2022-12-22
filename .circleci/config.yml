@@ -22,13 +22,13 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
 
-  get_branch:
+  # get_branch:
 
-    docker:
-      - image: cimg/base:stable
+  #   docker:
+  #     - image: cimg/base:stable
     
-    steps:
-      - checkout
+  #   steps:
+  #     - checkout
       # - run:
       #     name: "print branch"
       #     command: | 
@@ -88,9 +88,12 @@ workflows:
       #     mapping: clazar/backend/.* condition_set true
       #     base-revision: <<pipeline.git.branch>>
       #     config-path: .circleci/config.yml
-      - get_branch
       - say-hello
       - test_cases_run:
           context: slack-secrets
+  
+  testing_workflow:
+    jobs:
+      - test_cases_run
 
 # VS Code Extension Version: 1.5.0
