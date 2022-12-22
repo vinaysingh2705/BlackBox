@@ -83,7 +83,8 @@ workflows:
       - get_branch
       - say-hello:
           when:
-            not: $condition
+            condition:
+              not: $condition
       - test_cases_run:
           context: slack-secrets
 
