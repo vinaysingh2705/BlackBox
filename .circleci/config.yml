@@ -90,6 +90,8 @@ workflows:
       - say-hello
       - get_branch
   testing_workflow:
+    when:
+      equal: [$INITIAL_SHA, $FINAL_SHA]
     jobs:
       - test_cases_run
 
