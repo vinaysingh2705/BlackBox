@@ -77,9 +77,14 @@ workflows:
     jobs:
       - path-filtering/filter:
           name: check-updated-file
-          mapping: clazar/backend/.* say-hello true
+          mapping: clazar/backend/.* condition true
           base-revision: <<pipeline.git.branch>>
           config-path: .circleci/config.yml
       - get_branch
+      - say-hello:
+          when:
+            not: $condition
       - test_cases_run:
           context: slack-secrets
+
+# VS Code Extension Version: 1.5.0
