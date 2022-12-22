@@ -53,7 +53,12 @@ jobs:
           command: |
             git subtree split --prefix backend main
             git subtree split --prefix backend <<pipeline.git.branch>>
-
+      - run:
+          name: "my custom Initial sha environment variable"
+          command: echo ${INITIAL_SHA}
+      - run:
+          name: "my custom final sha environment variable"
+          command: echo ${FINAL_SHA}
       # - run:
       #     name: Running migrations
       #     command: |
@@ -91,7 +96,7 @@ workflows:
       - get_branch
   testing_workflow:
     when:
-      equal: [$INITIAL_SHA, $FINAL_SHA]
+      equal: [$(INITIAL_SHA), $(FINAL_SHA)]
     jobs:
       - test_cases_run
 
