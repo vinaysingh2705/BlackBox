@@ -26,7 +26,7 @@ jobs:
           command: echo 'export INITIAL_SHA=$(git subtree split --prefix backend main)' >> "$BASH_ENV"
       - run:
           name: "setup new branch sha environment variables"
-          command: echo 'export FINAL_SHA=$(git subtree split --prefix backend <<pipeline.git.branch>>' >> "$BASH_ENV"
+          command: echo 'export FINAL_SHA=$(git subtree split --prefix backend <<pipeline.git.branch>>)' >> "$BASH_ENV"
       - run:
           name: "my custom Initial sha environment variable"
           command: echo ${INITIAL_SHA}
