@@ -22,7 +22,10 @@ jobs:
           name: "Say hello"
           command: | 
             "echo Hello, World!"
-  
+      - run:
+          name: "test"
+          command: |
+            "echo $condition_set"
   get_branch:
 
     docker:
@@ -77,14 +80,11 @@ workflows:
     jobs:
       - path-filtering/filter:
           name: check-updated-file
-          mapping: clazar/backend/.* condition true
+          mapping: clazar/backend/.* condition_set true
           base-revision: <<pipeline.git.branch>>
           config-path: .circleci/config.yml
       - get_branch
-      - say-hello:
-          when:
-            condition:
-              not: $condition
+      - say-hello
       - test_cases_run:
           context: slack-secrets
 
