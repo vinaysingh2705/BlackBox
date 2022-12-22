@@ -32,7 +32,7 @@ jobs:
       - run:
           name: "print branch"
           command: | 
-            declare -n INITIAL=$(git subtree split --prefix backend main)
+            declare -n MAIN_BRANCH=$(git subtree split --prefix backend main)
             export INITIAL_SHA=${INITIAL}
             declare -n FINAL=$(git subtree split --prefix backend <<pipeline.git.branch>>)
             export FINAL_SHA=${FINAL}
@@ -81,7 +81,7 @@ workflows:
   experimenting_with_things:
     when:
       not:
-        equal: [git subtree split --prefix backend main, git subtree split --prefix backend <<pipeline.git.branch>>]
+        equal: [$(git subtree split --prefix backend main), $(git subtree split --prefix backend <<pipeline.git.branch>>)]
     jobs:
       # - path-filtering/filter:
       #     name: check-updated-file
