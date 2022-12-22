@@ -38,39 +38,39 @@ jobs:
       - image: cimg/python:3.10.9
     steps:
       - checkout
-      - run:
-          name: Installing dependencies
-          command: |
-            python3 --version
-            python3.10 -m venv venv
-            . venv/bin/activate
-            cd backend/
-            pip3 install -r requirements.txt
+      # - run:
+      #     name: Installing dependencies
+      #     command: |
+      #       python3 --version
+      #       python3.10 -m venv venv
+      #       . venv/bin/activate
+      #       cd backend/
+      #       pip3 install -r requirements.txt
       - run:
           name: "branch status"
           command: |
             git subtree split --prefix backend main
             git subtree split --prefix backend <<pipeline.git.branch>>
 
-      - run:
-          name: Running migrations
-          command: |
-            . venv/bin/activate
-            cd backend/
-            python manage.py migrate
+      # - run:
+      #     name: Running migrations
+      #     command: |
+      #       . venv/bin/activate
+      #       cd backend/
+      #       python manage.py migrate
 
-      - run:
-          name: Running tests
-          command: |
-            . venv/bin/activate
-            cd backend/
-            python manage.py test
-      - store_test_results:
-          path: test-results
-      - slack/notify:
-          event: fail
-          channel: $SLACK_CHANNEL
-          template: basic_fail1
+      # - run:
+      #     name: Running tests
+      #     command: |
+      #       . venv/bin/activate
+      #       cd backend/
+      #       python manage.py test
+      # - store_test_results:
+      #     path: test-results
+      # - slack/notify:
+      #     event: fail
+      #     channel: $SLACK_CHANNEL
+      #     template: basic_fail1
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
