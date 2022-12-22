@@ -88,6 +88,7 @@ workflows:
       #     base-revision: <<pipeline.git.branch>>
       #     config-path: .circleci/config.yml
       - say-hello
+      - get_branch
   testing_workflow:
     jobs:
       - test_cases_run
