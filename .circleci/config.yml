@@ -32,9 +32,9 @@ jobs:
       - run:
           name: "print branch"
           command: | 
-            declare -n INITIAL=git subtree split --prefix backend main
+            declare -n INITIAL=$(git subtree split --prefix backend main)
             export INITIAL_SHA=${INITIAL}
-            declare -n FINAL=git subtree split --prefix backend <<pipeline.git.branch>>
+            declare -n FINAL=$(git subtree split --prefix backend <<pipeline.git.branch>>)
             export FINAL_SHA=${FINAL}
       
       - run:
