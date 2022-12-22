@@ -32,8 +32,8 @@ jobs:
       - run:
           name: "hope"
           command: |
-            "echo ${MAIN_BRANCH_SHA}"
-            "echo ${DIFF_BRANCH_SHA}"
+              ${MAIN_BRANCH_SHA}
+              ${DIFF_BRANCH_SHA}
 
   test_cases_run:
     docker:
