@@ -23,7 +23,7 @@ jobs:
           command: "echo Hello, World!"
       - run:
           name: "test"
-          command: "echo $condition_set"
+          command: "echo <<parameters.mapping>>"
   get_branch:
 
     docker:
