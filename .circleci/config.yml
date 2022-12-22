@@ -78,7 +78,7 @@ workflows:
   experimenting_with_things:
     when:
       not:
-        equal: [${git subtree split --prefix backend main}, ${git subtree split --prefix backend <<pipeline.git.branch>>}]
+        equal: ['${git subtree split --prefix backend main}', '${git subtree split --prefix backend <<pipeline.git.branch>>}']
     jobs:
       # - path-filtering/filter:
       #     name: check-updated-file
