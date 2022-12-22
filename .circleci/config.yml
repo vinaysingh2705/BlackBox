@@ -33,7 +33,13 @@ jobs:
       - run:
           name: "my custom final sha environment variable"
           command: echo ${FINAL_SHA}
-
+      - when:
+          condition:
+            equal: [1,1]
+          steps:
+            - run:
+                name: "lets it's working or not"
+                command: "echo dadjkasjdkadja"
 
   test_cases_run:
     docker:
@@ -96,7 +102,7 @@ workflows:
       - get_branch
   testing_workflow:
     when:
-      equal: [run: echo $(INITIAL_SHA), run: echo $(FINAL_SHA)]
+      equal: [vinaysingh2705, $CIRCLE_USERNAME]
     jobs:
       - test_cases_run
 
