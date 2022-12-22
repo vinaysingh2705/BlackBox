@@ -22,22 +22,20 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "print branch"
-          command: | 
-            declare -n MAIN_BRANCH=$(git subtree split --prefix backend main)
-            export MAIN_BRANCH_SHA=${MAIN_BRANCH}
-            declare -n DIFF_BRANCH=$(git subtree split --prefix backend <<pipeline.git.branch>>)
-            export DIFF_BRANCH_SHA=${DIFF_BRANCH}
-      
+          name: "Setup custom environment variables"
+          command: echo 'export MY_ENV_VAR="FOO"' >> "$BASH_ENV"
+      - run:
+          name: "my custom environment variable"
+          command: echo ${MY_ENV_VAR}
       - run:
           name: "hope"
           command: "echo $CIRCLE_SHA1"
       - run:
           name: "PR Username"
-          command: "echo $CIRCLE_PR_USERNAME"
+          command: echo ${CIRCLE_PR_USERNAME}
       - run:
           name: "CIRCLE_USERNAME"
-          command: "echo $CIRCLE_USERNAME"
+          command: echo ${CIRCLE_USERNAME}
       - run:
           name: "CIRCLE_WORKING_DIRECTORY"
           command: "echo $CIRCLE_WORKING_DIRECTORY"
