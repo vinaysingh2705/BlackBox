@@ -23,7 +23,7 @@ jobs:
           command: "echo Hello, World!"
       - run:
           name: "test"
-          command: "echo <<parameters.mapping>>"
+          command: "echo <<pipeline.parameters.mapping>>"
   get_branch:
 
     docker:
