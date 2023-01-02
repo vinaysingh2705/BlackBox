@@ -26,9 +26,7 @@ workflows:
       - maven/test:
           name: hello-backend
           command: "echo Heelo Backend!"
-      - print_parameters_frontend:
-          name: Params
-          command: "echo <<pipeline.parameters.run-frontend>>"
+
   # when pipeline parameter, run-build-service-2-job is true, the
   # build-service-2 job is triggered.
   service-2:
@@ -37,9 +35,7 @@ workflows:
       - maven/test:
           name: hello-frontend
           command: "echo Hello frontend!"
-      - print_parameters_backend:
-          name: Params
-          command: "echo <<pipeline.parameters.run-backend>>"
+
   # when pipeline parameter, run-build-service-1-job OR
   # run-build-service-2-job is true, run-integration-tests job is
   # triggered. see:
