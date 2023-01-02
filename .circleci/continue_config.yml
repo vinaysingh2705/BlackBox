@@ -38,10 +38,15 @@ jobs:
 workflows:
   # when pipeline parameter, run-build-service-1-job is true, the
   # build-service-1 job is triggered.
-  Test:
+  TEST_BACKEND:
+    when: <<pipeline.parameters.check_backend>>
     jobs:
       - say-backend
+  Test_FRONTEND:
+    when: <<pipeline.parameters.check_frontend>>
+    jobs:
       - say-frontend
+
   # Backend:
   #   when: << pipeline.parameters.run-backend >>
   #   jobs:
