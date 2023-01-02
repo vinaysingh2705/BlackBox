@@ -6,10 +6,10 @@ orbs:
 # the default pipeline parameters, which will be updated according to
 # the results of the path-filtering orb
 parameters:
-  run-backend:
+  check_backend:
     type: boolean
     default: false
-  run-frontend:
+  check_frontend:
     type: boolean
     default: false
 
@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run:
           name: "Say hello backend"
-          command: "echo <<pipeline.paramters.run-backend>>"
+          command: "echo <<pipeline.parameters.check_backend>>"
 
   say-frontend:
     docker:
@@ -30,7 +30,7 @@ jobs:
       - checkout
       - run:
           name: "Say hello frontend"
-          command: "echo <<pipeline.paramters.run-frontend>>"
+          command: "echo <<pipeline.parameters.check_frontend>>"
   
 # here we specify our workflows, most of which are conditionally
 # executed based upon pipeline parameter values. Each workflow calls a
@@ -38,18 +38,21 @@ jobs:
 workflows:
   # when pipeline parameter, run-build-service-1-job is true, the
   # build-service-1 job is triggered.
-
-  Backend:
-    when: << pipeline.parameters.run-backend >>
+  Test:
     jobs:
       - say-backend
-
-  # when pipeline parameter, run-build-service-2-job is true, the
-  # build-service-2 job is triggered.
-  Frontend:
-    when: << pipeline.parameters.run-frontend >>
-    jobs:
       - say-frontend
+  # Backend:
+  #   when: << pipeline.parameters.run-backend >>
+  #   jobs:
+  #     - say-backend
+
+  # # when pipeline parameter, run-build-service-2-job is true, the
+  # # build-service-2 job is triggered.
+  # Frontend:
+  #   when: << pipeline.parameters.run-frontend >>
+  #   jobs:
+  #     - say-frontend
 
   # when pipeline parameter, run-build-service-1-job OR
   # run-build-service-2-job is true, run-integration-tests job is
