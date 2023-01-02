@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run:
           name: "Say hello backend"
-          command: "echo <<pipeline.paramters.run-backend"
+          command: "echo <<pipeline.paramters.run-backend>>"
 
   say-frontend:
     docker:
@@ -30,7 +30,7 @@ jobs:
       - checkout
       - run:
           name: "Say hello frontend"
-          command: "echo <<pipeline.paramters.run-frontend"
+          command: "echo <<pipeline.paramters.run-frontend>>"
   
 # here we specify our workflows, most of which are conditionally
 # executed based upon pipeline parameter values. Each workflow calls a
