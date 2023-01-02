@@ -20,8 +20,8 @@ workflows:
           # line:
           # <regex path-to-test> <parameter-to-set> <value-of-pipeline-parameter>
           mapping: |
-            backend/.* run-backend true
-            frontend/.* run-frontend true
+            backend/.* check_backend true
+            frontend/.* check_frontend true
           base-revision: main
           # this is the path of the configuration we should trigger once
           # path filtering and pipeline parameter value updates are

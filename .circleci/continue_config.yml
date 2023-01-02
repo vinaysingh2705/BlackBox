@@ -1,38 +1,59 @@
 version: 2.1
 
 orbs:
-  maven: circleci/maven@1.2.0
+  slack: circleci/slack@4.12.0
 
 # the default pipeline parameters, which will be updated according to
 # the results of the path-filtering orb
 parameters:
-  run-backend:
+  check_backend:
     type: boolean
     default: false
-  run-frontend:
+  check_frontend:
     type: boolean
     default: false
 
+jobs:
+  say-backend:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Say hello backend"
+          command: "echo <<pipeline.parameters.check_backend>>"
+
+  say-frontend:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Say hello frontend"
+          command: "echo <<pipeline.parameters.check_frontend>>"
+  
 # here we specify our workflows, most of which are conditionally
 # executed based upon pipeline parameter values. Each workflow calls a
 # specific job defined above, in the jobs section.
 workflows:
   # when pipeline parameter, run-build-service-1-job is true, the
   # build-service-1 job is triggered.
-  service-1:
-    when: << pipeline.parameters.run-backend >>
+  Test:
     jobs:
-      - maven/test:
-          name: hello-backend
-          run: "echo Heelo Backend!"
-  # when pipeline parameter, run-build-service-2-job is true, the
-  # build-service-2 job is triggered.
-  service-2:
-    when: << pipeline.parameters.run-frontend >>
-    jobs:
-      - maven/test:
-          name: hello-frontend
-          run: "echo Hello frontend!"
+      - say-backend
+      - say-frontend
+  # Backend:
+  #   when: << pipeline.parameters.run-backend >>
+  #   jobs:
+  #     - say-backend
+
+  # # when pipeline parameter, run-build-service-2-job is true, the
+  # # build-service-2 job is triggered.
+  # Frontend:
+  #   when: << pipeline.parameters.run-frontend >>
+  #   jobs:
+  #     - say-frontend
+
   # when pipeline parameter, run-build-service-1-job OR
   # run-build-service-2-job is true, run-integration-tests job is
   # triggered. see:
@@ -46,11 +67,3 @@ workflows:
   #         name: run-integration-tests
   #         command: '-X verify'
   #         app_src_directory: 'tests'
-  parameter-value:
-    jobs:
-      - print_parameters_frontend:
-          name: Params
-          run: "echo <<pipeline.parameters.run-frontend>>"
-      - print_parameters_backend:
-          name: Params
-          run: "echo <<pipeline.parameters.run-backend>>"
