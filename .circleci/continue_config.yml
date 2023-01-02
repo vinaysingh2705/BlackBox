@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  maven: circleci/maven@1.2.0
+  slack: circleci/slack@4.12.0
 
 # the default pipeline parameters, which will be updated according to
 # the results of the path-filtering orb
@@ -13,6 +13,25 @@ parameters:
     type: boolean
     default: false
 
+jobs:
+  say-backend:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Say hello backend"
+          command: "echo <<pipeline.paramters.run-backend"
+
+  say-frontend:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Say hello frontend"
+          command: "echo <<pipeline.paramters.run-frontend"
+  
 # here we specify our workflows, most of which are conditionally
 # executed based upon pipeline parameter values. Each workflow calls a
 # specific job defined above, in the jobs section.
@@ -20,21 +39,17 @@ workflows:
   # when pipeline parameter, run-build-service-1-job is true, the
   # build-service-1 job is triggered.
 
-  service-1:
+  Backend:
     when: << pipeline.parameters.run-backend >>
     jobs:
-      - maven/test:
-          name: hello-backend
-          command: "echo Heelo Backend!"
+      - say-backend
 
   # when pipeline parameter, run-build-service-2-job is true, the
   # build-service-2 job is triggered.
-  service-2:
+  Frontend:
     when: << pipeline.parameters.run-frontend >>
     jobs:
-      - maven/test:
-          name: hello-frontend
-          command: "echo Hello frontend!"
+      - say-frontend
 
   # when pipeline parameter, run-build-service-1-job OR
   # run-build-service-2-job is true, run-integration-tests job is
