@@ -1,109 +1,30 @@
-
 version: 2.1
-# setup: true
+
+# this allows you to use CircleCI's dynamic configuration feature
+setup: true
+
+# the path-filtering orb is required to continue a pipeline based on
+# the path of an updated fileset
 orbs:
-  slack: circleci/slack@4.12.0
-  # path-filtering: circleci/path-filtering@0.1.3
-jobs:
-  say-hello:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+  path-filtering: circleci/path-filtering@0.1.1
 
-  get_branch:
-
-    docker:
-      - image: cimg/base:stable
-    
-    steps:
-      - checkout
-      - run:
-          name: "Setup custom master sha environment variables"
-          command: echo 'export INITIAL_SHA=$(git subtree split --prefix backend main)' >> "$BASH_ENV"
-      - run:
-          name: "setup new branch sha environment variables"
-          command: echo 'export FINAL_SHA=$(git subtree split --prefix backend <<pipeline.git.branch>>)' >> "$BASH_ENV"
-      - run:
-          name: "my custom Initial sha environment variable"
-          command: echo ${INITIAL_SHA}
-      - run:
-          name: "my custom final sha environment variable"
-          command: echo ${FINAL_SHA}
-      - when:
-          condition:
-            equal: [$INITIAL_SHA, $FINAL_SHA]
-          steps:
-            - run:
-                name: "lets it's working or not"
-                command: "echo dadjkasjdkadja"
-
-  test_cases_run:
-    docker:
-      - image: cimg/python:3.10.9
-    steps:
-      - checkout
-      # - run:
-      #     name: Installing dependencies
-      #     command: |
-      #       python3 --version
-      #       python3.10 -m venv venv
-      #       . venv/bin/activate
-      #       cd backend/
-      #       pip3 install -r requirements.txt
-      - run:
-          name: "branch status"
-          command: |
-            git subtree split --prefix backend main
-            git subtree split --prefix backend <<pipeline.git.branch>>
-      - run:
-          name: "my custom Initial sha environment variable"
-          command: echo ${INITIAL_SHA}
-      - run:
-          name: "my custom final sha environment variable"
-          command: echo ${FINAL_SHA}
-      # - run:
-      #     name: Running migrations
-      #     command: |
-      #       . venv/bin/activate
-      #       cd backend/
-      #       python manage.py migrate
-
-      # - run:
-      #     name: Running tests
-      #     command: |
-      #       . venv/bin/activate
-      #       cd backend/
-      #       python manage.py test
-      # - store_test_results:
-      #     path: test-results
-      # - slack/notify:
-      #     event: fail
-      #     channel: $SLACK_CHANNEL
-      #     template: basic_fail1
-
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  experimenting_with_things:
-    # when:
-    #   not:
-    #     equal: ['${git subtree split --prefix backend main}', '${git subtree split --prefix backend <<pipeline.git.branch>>}']
+  # the always-run workflow is always triggered, regardless of the pipeline parameters.
+  always-run:
     jobs:
-      # - path-filtering/filter:
-      #     name: check-updated-file
-      #     mapping: clazar/backend/.* condition_set true
-      #     base-revision: <<pipeline.git.branch>>
-      #     config-path: .circleci/config.yml
-      - say-hello
-      - get_branch
-  testing_workflow:
-    when:
-      equal: [vinaysingh2705, $CIRCLE_USERNAME]
-    jobs:
-      - test_cases_run
-
-# VS Code Extension Version: 1.5.0
+      # the path-filtering/filter job determines which pipeline
+      # parameters to update.
+      - path-filtering/filter:
+          name: check-updated-files
+          # 3-column, whitespace-delimited mapping. One mapping per
+          # line:
+          # <regex path-to-test> <parameter-to-set> <value-of-pipeline-parameter>
+          mapping: |
+            backend/.* run-backend true
+            frontend/.* run-frontend true
+          base-revision: main
+          # this is the path of the configuration we should trigger once
+          # path filtering and pipeline parameter value updates are
+          # complete. In this case, we are using the parent dynamic
+          # configuration itself.
+          config-path: .circleci/continue_config.yml
