@@ -32,6 +32,20 @@ jobs:
           name: "Say hello frontend"
           command: "echo <<pipeline.parameters.check_frontend>>"
   
+  deploy-main-branch:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Say hello main branch"
+          command: "echo HEllo , Vinay!"
+      - run:
+          name: "check paramters"
+          command: |
+            "echo <<pipeline.parameters.check_backend>>"
+            "echo <<pipeline.parameters.check_frontend>>"
+  
 # here we specify our workflows, most of which are conditionally
 # executed based upon pipeline parameter values. Each workflow calls a
 # specific job defined above, in the jobs section.
@@ -46,7 +60,12 @@ workflows:
     when: <<pipeline.parameters.check_frontend>>
     jobs:
       - say-frontend
-
+  Deploy:
+    jobs:
+      - deploy-main-branch:
+          filters:
+              branches:
+                only: master
   # Backend:
   #   when: << pipeline.parameters.run-backend >>
   #   jobs:
