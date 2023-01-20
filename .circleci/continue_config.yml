@@ -22,6 +22,25 @@ jobs:
       - run:
           name: "Say hello backend"
           command: "echo <<pipeline.parameters.check_backend>>"
+      - run:
+          name: Installing Dependencies
+          command: |
+            cd backend/
+            python3.10 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+      - run:
+          name: Migrate DB
+          command: |
+            cd backend/
+            . venv/bin/activate
+            python manage.py migrate
+      - run:
+          name: Running Tests
+          command: |
+            cd backend/
+            . venv/bin/activate
+            python manage.py test
 
   say-frontend:
     docker:
@@ -32,19 +51,7 @@ jobs:
           name: "Say hello frontend"
           command: "echo <<pipeline.parameters.check_frontend>>"
   
-  deploy-main-branch:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "Say hello main branch"
-          command: "echo HEllo , Vinay!"
-      - run:
-          name: "check paramters"
-          command: |
-            "echo <<pipeline.parameters.check_backend>>"
-            "echo <<pipeline.parameters.check_frontend>>"
+  
   
 # here we specify our workflows, most of which are conditionally
 # executed based upon pipeline parameter values. Each workflow calls a
@@ -60,9 +67,4 @@ workflows:
     when: <<pipeline.parameters.check_frontend>>
     jobs:
       - say-frontend
-  Deploy:
-    jobs:
-      - deploy-main-branch:
-          filters:
-              branches:
-                only: main
+ 
