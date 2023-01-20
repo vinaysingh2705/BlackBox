@@ -17,9 +17,10 @@ jobs:
   say-backend:
     docker:  
     - image: cimg/python:3.10.9
-
+    parallelism: 4
     steps:
       - checkout
+      - run: go test -v $(go list ./... | circleci tests split --split-by=timings)
       - run:
           name: "Say hello backend"
           command: "echo <<pipeline.parameters.check_backend>>"
