@@ -17,6 +17,8 @@ jobs:
   say-backend:
     docker:
       - image: cimg/base:stable
+      - image: cimg/python:3.10.9
+
     steps:
       - checkout
       - run:
