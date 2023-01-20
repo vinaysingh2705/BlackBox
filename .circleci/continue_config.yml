@@ -44,14 +44,12 @@ jobs:
             . venv/bin/activate
             TESTFILES=$(circleci tests glob **/tests/ | circleci tests split --split-by=timings)
             echo $TESTFILES
+            mkdir test-results
             python manage.py test $TESTFILES
-      - run:
-          command: cp junit.xml ~/junit/
-          when: always
       - store_test_results:
-          path: ~/junit
+          path: test-results
       - store_artifacts:
-          path: ~/junit
+          path: test-results/test.xml
 
   say-frontend:
     docker:
