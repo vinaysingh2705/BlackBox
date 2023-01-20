@@ -60,7 +60,6 @@ workflows:
   # when pipeline parameter, run-build-service-1-job is true, the
   # build-service-1 job is triggered.
   TEST_BACKEND:
-    when: <<pipeline.parameters.check_backend>>
     jobs:
       - say-backend
   Test_FRONTEND:
