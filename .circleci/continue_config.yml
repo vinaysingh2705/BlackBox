@@ -42,7 +42,7 @@ jobs:
           command: |
             cd backend/
             . venv/bin/activate
-            TESTFILES=$(circleci tests glob **/tests/ | circleci tests split --split-by=timings)
+            TESTFILES=$(circleci tests glob **/tests/ | circleci tests split)
             echo $TESTFILES
             mkdir test-results
             python manage.py test $TESTFILES
