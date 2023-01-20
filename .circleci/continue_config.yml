@@ -44,10 +44,9 @@ jobs:
             . venv/bin/activate
             TESTFILES=$(circleci tests glob **/tests/ | circleci tests split)
             echo $TESTFILES
-            mkdir test-results
             python manage.py test $TESTFILES
       - store_test_results:
-          path: test-results
+          path: test-results/results.xml
       - store_artifacts:
           path: test-results/test.xml
 
