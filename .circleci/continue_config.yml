@@ -41,9 +41,9 @@ jobs:
           command: |
             cd backend/
             . venv/bin/activate
-            TESTFILES=$(circleci tests glob **/tests/test_*.py | circleci tests split --split-by=timings)
+            TESTFILES=$(circleci tests glob **/tests/ | circleci tests split --split-by=timings)
             echo $TESTFILES
-            python manage.py test $TESTFILES
+            python manage.py test --verbosity=2 $TESTFILES
 
   say-frontend:
     docker:
