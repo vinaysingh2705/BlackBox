@@ -20,7 +20,6 @@ jobs:
     parallelism: 4
     steps:
       - checkout
-      - run: go test -v $(go list ./... | circleci tests split --split-by=timings)
       - run:
           name: "Say hello backend"
           command: "echo <<pipeline.parameters.check_backend>>"
@@ -42,7 +41,7 @@ jobs:
           command: |
             cd backend/
             . venv/bin/activate
-            python manage.py test
+            python manage.py test --split-by=timings
 
   say-frontend:
     docker:
