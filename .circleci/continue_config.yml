@@ -17,6 +17,7 @@ jobs:
   say-backend:
     docker:  
     - image: cimg/python:3.10.9
+    parallelism: 4
     steps:
       - checkout
       - run:
@@ -40,7 +41,9 @@ jobs:
           command: |
             cd backend/
             . venv/bin/activate
-            python manage.py test
+            TESTFILES=$(circleci tests glob **/tests/ | circleci tests split --split-by=timings)
+            echo $TESTFILES
+            python manage.py test --verbosity=2 $TESTFILES
 
   say-frontend:
     docker:
