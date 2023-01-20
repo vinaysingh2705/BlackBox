@@ -66,28 +66,3 @@ workflows:
           filters:
               branches:
                 only: main
-  # Backend:
-  #   when: << pipeline.parameters.run-backend >>
-  #   jobs:
-  #     - say-backend
-
-  # # when pipeline parameter, run-build-service-2-job is true, the
-  # # build-service-2 job is triggered.
-  # Frontend:
-  #   when: << pipeline.parameters.run-frontend >>
-  #   jobs:
-  #     - say-frontend
-
-  # when pipeline parameter, run-build-service-1-job OR
-  # run-build-service-2-job is true, run-integration-tests job is
-  # triggered. see:
-  # https://circleci.com/docs/configuration-reference/#logic-statements
-  # for more information.
-  # run-integration-tests:
-  #   when:
-  #     or: [<< pipeline.parameters.run-build-service-1-job >>, << pipeline.parameters.run-build-service-2-job >>]
-  #   jobs:
-  #     - maven/test:
-  #         name: run-integration-tests
-  #         command: '-X verify'
-  #         app_src_directory: 'tests'
