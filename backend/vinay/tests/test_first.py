@@ -2,10 +2,10 @@ from django.test import TestCase
 import time
 
 
-class TestSomething(TestCase):
+class TestSomethingElse(TestCase):
     
     def test_name(self):
-        time.sleep(5)
+        time.sleep(10)
         self.assertEqual(1,1)
     def test_name1(self):
         time.sleep(1)
