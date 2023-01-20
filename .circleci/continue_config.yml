@@ -18,6 +18,7 @@ jobs:
     docker:  
     - image: cimg/python:3.10.9
     parallelism: 4
+    resource_class: large
     steps:
       - checkout
       - run:
@@ -43,7 +44,14 @@ jobs:
             . venv/bin/activate
             TESTFILES=$(circleci tests glob **/tests/ | circleci tests split --split-by=timings)
             echo $TESTFILES
-            python manage.py test --verbosity=2 $TESTFILES
+            python manage.py test $TESTFILES
+      - run:
+          command: cp junit.xml ~/junit/
+          when: always
+      - store_test_results:
+          path: ~/junit
+      - store_artifacts:
+          path: ~/junit
 
   say-frontend:
     docker:
