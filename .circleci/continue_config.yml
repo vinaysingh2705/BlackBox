@@ -43,7 +43,6 @@ jobs:
             cd backend/
             . venv/bin/activate
             TESTFILES=$(circleci tests glob **/tests/ | circleci tests split)
-            mkdir test-results
             echo $TESTFILES 
             mkdir test-results
             python manage.py test $TESTFILES --junitxml=test-results/junit.xml
