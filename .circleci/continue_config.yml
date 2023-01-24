@@ -23,7 +23,9 @@ jobs:
       - checkout
       - run:
           name: "Say hello backend"
-          command: "echo <<pipeline.parameters.check_backend>>"
+          command: |
+            "echo <<pipeline.parameters.check_backend>>"
+            "echo $CIRCLE_PULL_REQUEST"
       - run:
           name: Installing Dependencies
           command: |
