@@ -17,7 +17,7 @@ jobs:
   say-backend:
     docker:  
     - image: cimg/python:3.10.9
-    parallelism: 4
+    # parallelism: 4
     resource_class: large
     steps:
       - checkout
@@ -44,10 +44,11 @@ jobs:
           command: |
             cd backend/
             . venv/bin/activate
-            TESTFILES=$(circleci tests glob **/tests/ | circleci tests split)
-            echo $TESTFILES 
-            mkdir test-results
-            python manage.py test $TESTFILES --junitxml=test-results/junit.xml
+            python manage.py test
+            # TESTFILES=$(circleci tests glob **/tests/ | circleci tests split)
+            # echo $TESTFILES 
+            # mkdir test-results
+            # python manage.py test $TESTFILES
       - store_test_results:
           path: test-results
 
@@ -69,6 +70,11 @@ workflows:
   # when pipeline parameter, run-build-service-1-job is true, the
   # build-service-1 job is triggered.
   TEST_BACKEND:
+    - when:
+        condition:
+          - and:
+              - equal: [main, <<pipeline.git.branch>>]
+              - <<pipeline.parameters.backend>>
     jobs:
       - say-backend
   Test_FRONTEND:
