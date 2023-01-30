@@ -42,10 +42,9 @@ jobs:
           command: |
             cd backend/
             . venv/bin/activate
-            mkdir test-results
             python manage.py test > test-results/tests.xml
       - store_test_results:
-          path: test-results
+          path: backend/tests.xml
 
   say-frontend:
     docker:
