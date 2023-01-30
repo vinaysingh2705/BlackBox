@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'vinay',
+    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+import collections
+collections.Callable = collections.abc.Callable
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = [
+    '--with-xunit',
+    '--xunit-file=tests.xml',
+    '--verbosity=3'
+]
+# TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

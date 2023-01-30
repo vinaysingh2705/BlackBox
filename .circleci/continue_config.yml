@@ -43,7 +43,7 @@ jobs:
             cd backend/
             . venv/bin/activate
             mkdir test-results
-            python manage.py test --verbosity=3 > test-results/test.xml
+            python manage.py test > test-results/tests.xml
       - store_test_results:
           path: test-results
 
