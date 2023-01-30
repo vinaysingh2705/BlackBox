@@ -42,8 +42,7 @@ jobs:
           command: |
             cd backend/
             . venv/bin/activate
-            mkdir test-results
-            python manage.py test > test-results/tests.xml
+            python manage.py test
       - store_test_results:
           path: backend/tests.xml
 
