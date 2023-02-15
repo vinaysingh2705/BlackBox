@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run:
           name: "Say hello VINAY"
-          command: "echo $CIRCLE_PULL_REQUEST"
+          command: echo $CIRCLE_PULL_REQUEST
 
   say-backend:
     docker:  
