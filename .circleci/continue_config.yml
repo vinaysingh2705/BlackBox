@@ -14,6 +14,15 @@ parameters:
     default: false
 
 jobs:
+  check_pull_request:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Say hello VINAY"
+          command: "echo $CIRCLE_PULL_REQUEST"
+
   say-backend:
     docker:  
     - image: cimg/python:3.10.9
@@ -66,6 +75,7 @@ workflows:
   TEST_BACKEND:
     jobs:
       - say-backend
+      - check_pull_request
   Test_FRONTEND:
     when: <<pipeline.parameters.check_frontend>>
     jobs:
