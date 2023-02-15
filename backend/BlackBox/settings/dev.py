@@ -124,6 +124,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+
 import collections
 collections.Callable = collections.abc.Callable
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
